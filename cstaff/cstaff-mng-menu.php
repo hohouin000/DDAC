@@ -64,7 +64,8 @@
                         data: 'mitem_pic',
                         render: function(data) {
                             if (data != "") {
-                                return '<img src="../img/menu/' + data + "?" + new Date().getTime() + '"class="img-fluid rounded" width="125px" height="120px"/>'
+                                //return '<img src="../img/menu/' + data + "?" + new Date().getTime() + '"class="img-fluid rounded" width="125px" height="120px"/>'
+                                return '<img src="' + data +"?" + new Date().getTime() +'"class="img-fluid rounded" width="125px" height="120px"/>'
                             } else {
                                 return ''
                             }
