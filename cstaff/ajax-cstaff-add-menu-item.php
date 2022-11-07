@@ -47,7 +47,7 @@ if (mysqli_num_rows($result)) {
         try {
             $result = $s3Client->putObject([
             'Bucket' => $bucket,
-            'Key'    => $key,
+            'Key'    => $mitem_id.$key,
             'Body'   => $temp_file_location,
             'SourceFile' => $temp_file_location,
             'ACL'    => 'public-read', // make file 'public'
@@ -55,14 +55,21 @@ if (mysqli_num_rows($result)) {
             ]);
             
             $image_path = $result->get('ObjectURL');
-            echo "Image uploaded successfully. Image path is: ".$image_path;
+            //echo "Image uploaded successfully. Image path is: ".$image_path;
             $insert_query = "UPDATE mitem SET mitem_pic = '{$image_path}' WHERE mitem_id = {$mitem_id} AND store_id = {$store_id} ";
             $insert_result = $mysqli->query($insert_query);
+            if ($insert_result) {
+                $response['server_status'] = 1;
+            } else {
+                $response['server_status'] = 0;
+            }
+            echo json_encode($response);
         } catch (Aws\S3\Exception\S3Exception $e) {
-            echo "There was an error uploading the file.\n";
-            echo $e->getMessage();
-            $insert_result = false;
+            // echo "There was an error uploading the file.\n";
+            // echo $e->getMessage();
+            $response['server_status'] = 0;
         }
+       
         // Upload file to the server 
         // $mitem_id = $mysqli->insert_id;
         // $target_dir = '/img/menu/';
@@ -76,11 +83,6 @@ if (mysqli_num_rows($result)) {
         //     $insert_result = false;
         // }
 
-        if ($insert_result) {
-            $response['server_status'] = 1;
-        } else {
-            $response['server_status'] = 0;
-        }
-        echo json_encode($response);
+       
     }
 }
