@@ -42,9 +42,8 @@ if (mysqli_num_rows($result)) {
 
         $mitem_id = $mysqli->insert_id;
         $bucket = 'ddac-pastry-tp053060';
-        $file_Path = __DIR__ . '/img/'. $fileName;
         $temp_file_location = $_FILES['mitem-pic']['tmp_name'];
-        $key = basename($file_Path);
+        $key = basename($fileName);
         try {
             $result = $s3Client->putObject([
             'Bucket' => $bucket,
@@ -62,6 +61,7 @@ if (mysqli_num_rows($result)) {
         } catch (Aws\S3\Exception\S3Exception $e) {
             echo "There was an error uploading the file.\n";
             echo $e->getMessage();
+            $insert_result = false;
         }
         // Upload file to the server 
         // $mitem_id = $mysqli->insert_id;
