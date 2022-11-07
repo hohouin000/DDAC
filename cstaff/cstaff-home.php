@@ -5,10 +5,10 @@
     <?php session_start();
     include("../conn_db.php");
     include('../head.php');
-    if ($_SESSION["user_role"] != "CSTAFF") {
-        header("location:../restricted.php");
-        exit(1);
-    }
+    // if ($_SESSION["user_role"] != "CSTAFF") {
+    //     header("location:../restricted.php");
+    //     exit(1);
+    // }
     if (isset($_SESSION["store_id"])) {
         $store_id = $_SESSION["store_id"];
     }
@@ -28,7 +28,35 @@
                 <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z" />
                 <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z" />
             </svg> Welcome Back, <?php echo $_SESSION["user_fname"] . ' ' . $_SESSION["user_lname"] ?></h3>
+            
 
+
+                  <!-- GRID OF STORE -->
+      <div class="col">
+        <div class="card border-info p-2">
+          <div class="card-body">
+            <h4 class="card-title">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+              </svg>
+              Customer
+            </h4>
+            <p class="card-text my-2">
+              <span class="h6">
+                <?php
+                $query = "SELECT COUNT(*) AS userCount FROM user;";
+                $result = $mysqli->query($query)->fetch_array();
+                echo $result["userCount"];
+                ?>
+              </span>
+              User(s) Registered in the System
+            </p>
+            <div class="text-end">
+              <a href="admin-mng-user.php" class="btn btn-sm btn-outline-dark">Go to User Management</a>
+            </div>
+          </div>
+        </div>
+      </div>
         <!-- DASHBOARD -->
         <div class="row row-cols-1 row-cols-lg-2 align-items-stretch g-4 py-3">
 
@@ -66,7 +94,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-menu-up" viewBox="0 0 16 16">
                                 <path d="M7.646 15.854a.5.5 0 0 0 .708 0L10.207 14H14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3.793l1.853 1.854zM1 9V6h14v3H1zm14 1v2a1 1 0 0 1-1 1h-3.793a1 1 0 0 0-.707.293l-1.5 1.5-1.5-1.5A1 1 0 0 0 5.793 13H2a1 1 0 0 1-1-1v-2h14zm0-5H1V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v2zM2 11.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 0-1h-8a.5.5 0 0 0-.5.5zm0-4a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11a.5.5 0 0 0-.5.5zm0-4a.5.5 0 0 0 .5.5h6a.5.5 0 0 0 0-1h-6a.5.5 0 0 0-.5.5z" />
                             </svg>
-                            Menu Item
+                            Pastry 
                         </h4>
                         <p class="card-text my-2">
                             <span class="h6">
@@ -76,10 +104,10 @@
                                 echo $result["itemCount"];
                                 ?>
                             </span>
-                            Menu Item(s) Available in the System
+                            Pastry (s) Available in the System
                         </p>
                         <div class="text-end">
-                            <a href="cstaff-mng-menu.php" class="btn btn-sm btn-outline-dark">Go to Menu Management</a>
+                            <a href="cstaff-mng-menu.php" class="btn btn-sm btn-outline-dark">Go to Pastry Management</a>
                         </div>
                     </div>
                 </div>
