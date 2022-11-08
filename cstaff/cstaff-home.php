@@ -5,10 +5,10 @@
     <?php session_start();
     include("../conn_db.php");
     include('../head.php');
-    // if ($_SESSION["user_role"] != "CSTAFF") {
-    //     header("location:../restricted.php");
-    //     exit(1);
-    // }
+    if ($_SESSION["user_role"] != "CSTAFF") {
+        header("location:../restricted.php");
+        exit(1);
+    }
     if (isset($_SESSION["store_id"])) {
         $store_id = $_SESSION["store_id"];
     }
