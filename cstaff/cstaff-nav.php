@@ -9,13 +9,13 @@
                     <a class="nav-link px-2 text-dark" href="cstaff-home.php">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a href="cstaff-mng-menu.php" class="nav-link px-2 text-dark">Menu Management</a>
+                    <a href="../cstaff/cstaff-mng-menu.php" class="nav-link px-2 text-dark">Menu Management</a>
                 </li>
                 <li class="nav-item">
-                    <a href="cstaff-mng-order.php" class="nav-link px-2 text-dark">Order Management</a>
+                    <a href="../cstaff/cstaff-mng-order.php" class="nav-link px-2 text-dark">Order Management</a>
                 </li>
                 <li class="nav-item">
-                    <a href="cstaff-report-generation.php" class="nav-link px-2 text-dark">Report Generation</a>
+                    <a href="../cstaff/cstaff-report-generation.php" class="nav-link px-2 text-dark">Report Generation</a>
                 </li>
             </ul>
             <div class="d-flex">
