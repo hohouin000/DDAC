@@ -2,7 +2,6 @@
 include("../conn_db.php");
 
 
-$store_id = $_POST['store_id'];
 $user_fname = $_POST['user_fname'];
 $user_lname = $_POST['user_lname'];
 $user_pwd = $_POST['user_pwd'];
@@ -17,15 +16,11 @@ if (mysqli_num_rows($result)) {
     echo json_encode($response);
     exit();
 } else {
-    if ($store_id == "NULL") {
+   
         $insert_query = "INSERT INTO user (user_username,user_fname,user_lname,user_pwd,user_role,user_email) 
     VALUES ('{$user_username}','{$user_fname}','{$user_lname}','{$user_pwd}','{$user_role}','{$user_email}');";
         $insert_result = $mysqli->query($insert_query);
-    } else {
-        $insert_query = "INSERT INTO user (user_username,user_fname,user_lname,user_pwd,user_role,user_email,store_id) 
-    VALUES ('{$user_username}','{$user_fname}','{$user_lname}','{$user_pwd}','{$user_role}','{$user_email}','{$store_id}');";
-        $insert_result = $mysqli->query($insert_query);
-    }
+    
     $response['server_status'] = 1;
     echo json_encode($response);
     exit();

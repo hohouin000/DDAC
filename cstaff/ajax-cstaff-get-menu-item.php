@@ -5,10 +5,8 @@ if ($_SESSION["user_role"] != "CSTAFF") {
     header("location:../restricted.php");
     exit(1);
 }
-if (isset($_SESSION["store_id"])) {
-    $store_id = $_SESSION["store_id"];
-}
-$query = "SELECT * FROM mitem WHERE store_id = {$store_id}";
+
+$query = "SELECT * FROM mitem";
 $result = $mysqli->query($query);
 $rowcount = mysqli_num_rows($result);
 

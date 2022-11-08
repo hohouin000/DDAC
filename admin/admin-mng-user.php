@@ -5,7 +5,7 @@
     <?php session_start();
     include("../conn_db.php");
     include('../head.php');
-    if ($_SESSION["user_role"] != "ADMN") {
+    if ($_SESSION["user_role"] != "CSTAFF") {
         header("location:../restricted.php");
         exit(1);
     }
@@ -14,7 +14,7 @@
 </head>
 
 <body class="d-flex flex-column h-100">
-    <?php include('admin-nav.php') ?>
+    <?php include('../cstaff/cstaff-nav.php') ?>
     <div class="container p-2 pb-0 mt-5 pt-3" id="admin-dashboard">
         <h2 class="pt-3 display-6">User Management</h2>
         <div class="row g-2 justify-content-md-end">
@@ -36,10 +36,8 @@
                         <th>Last Name</th>
                         <th>Email</th>
                         <th>Password</th>
-                        <th>Role</th>
-                        <th>Store Name</th>
+                        <th>Role</th>  
                         <th>---</th>
-
                     </tr>
                 </thead>
             </table>
@@ -52,28 +50,7 @@
         $(document).ready(function() {
             var store_id;
             var user_id;
-            $("#form-add-role").change(function() {
-                var val = $(this).val();
-                if (val === "CSTAFF") {
-                    $("#div-add-select-store").show();
-                    $("#form-add-store").prop('required', true);
-                } else {
-                    $("#div-add-select-store").hide();
-                    $("#form-add-store").prop('required', false);
-                }
-            });
-
-            // Hide Div based on Value for Edit
-            $("#form-edit-role").change(function() {
-                var val = $(this).val();
-                if (val === "CSTAFF") {
-                    $("#div-edit-select-store").show();
-                    $("#form-add-store").prop('required', true);
-                } else {
-                    $("#div-edit-select-store").hide();
-                    $("#form-add-store").prop('required', false);
-                }
-            });
+            
 
             // Add User AJAX Call Starts here
             $("#form-add-user").on('submit', function(e) {
@@ -84,11 +61,6 @@
                 var user_email = $('#modal-add-user-email').val()
                 var user_role = $('#form-add-role').val()
                 var user_pwd = $('#modal-add-user-pwd').val()
-                if (user_role == "CSTAFF") {
-                    store_id = $('#form-add-store').val();
-                } else {
-                    store_id = "NULL";
-                }
                 $.ajax({
                     url: "ajax-admin-add-user.php",
                     type: "POST",
@@ -136,14 +108,14 @@
                     success: function(data) {
                         if (data.server_status == 1) {
                             $("#modal-edit-user").modal('show');
-                            if (data.user_role == "CSTAFF") {
-                                $("#div-edit-select-store").show();
-                                $('#form-edit-store').val(data.store_id);
-                                $("#form-edit-store").prop('required', true);
-                            } else {
-                                $("#div-edit-select-store").hide();
-                                $("#form-edit-store").prop('required', false);
-                            }
+                            // if (data.user_role == "CSTAFF") {
+                            //     $("#div-edit-select-store").show();
+                            //     $('#form-edit-store').val(data.store_id);
+                            //     $("#form-edit-store").prop('required', true);
+                            // } else {
+                            //     $("#div-edit-select-store").hide();
+                            //     $("#form-edit-store").prop('required', false);
+                            // }
                             $('#form-edit-username').val(data.user_username);
                             $('#form-edit-fname').val(data.user_fname);
                             $('#form-edit-lname').val(data.user_lname);
@@ -165,16 +137,12 @@
                 var user_email = $('#form-edit-email').val()
                 var user_role = $('#form-edit-role').val()
                 var user_pwd = $('#form-edit-pwd').val()
-                if (user_role == "CSTAFF") {
-                    store_id = $('#form-edit-store').val();
-                } else {
-                    store_id = "NULL";
-                }
+             
                 $.ajax({
                     url: "ajax-admin-update-user.php",
                     type: "POST",
                     data: {
-                        "store_id": store_id,
+                        
                         "user_username": user_username,
                         "user_fname": user_fname,
                         "user_lname": user_lname,
@@ -247,9 +215,6 @@
                         data: 'user_role'
                     },
                     {
-                        data: 'store_name'
-                    },
-                    {
                         data: 'user_id',
                         render: function(data, type, row) {
                             if (data != '') {
@@ -258,7 +223,6 @@
                                 return ''
                             }
                         }
-
                     },
                 ],
                 responsive: true
@@ -309,15 +273,7 @@
                                 <option value="CSTAFF" id="role-cstaff">CSTAFF</option>
                             </select>
                         </div>
-                        <div class="col-md-6" style="display: none;" id="div-add-select-store">
-                            <label for="role" class="form-label">Store Name</label>
-                            <select id="form-add-store" class="form-select" name="store-id" required>
-                                <option value="">Please select</option>
-                                <?php while ($row = mysqli_fetch_array($result)) { ?>
-                                    <option value='<?php echo ($row['store_id']); ?>'><?php echo ($row['store_name']); ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
+                       
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btn-modal-close-add">Close</button>
                         <button type="submit" class="btn btn-primary" id="btn-modal-add">Add User</button>
                 </div>
@@ -371,14 +327,7 @@
                                 <option value="CSTAFF">CSTAFF</option>
                             </select>
                         </div>
-                        <div class="col-md-6" style="display: none;" id="div-edit-select-store">
-                            <label for="role" class="form-label">Store Name</label>
-                            <select id="form-edit-store" class="form-select" name="store-id" required>
-                                <?php while ($row = mysqli_fetch_array($result)) { ?>
-                                    <option value='<?php echo ($row['store_id']); ?>'><?php echo ($row['store_name']); ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
+                   
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btn-modal-close-edit">Close</button>
                         <button type="submit" class="btn btn-primary" id="form-btn-edit">Edit User</button>
                 </div>
