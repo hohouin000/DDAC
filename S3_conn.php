@@ -6,9 +6,9 @@ $s3Client = new Aws\S3\S3Client([
 	'version' => 'latest',
     'scheme' => 'http',
 	'credentials' => [
-	    'key'    => "ASIAXOBIIX4WQ3SNDUXC",
-	    'secret' => "LnG3Y87QKjFOkK2bVsUBPxd6Z9xxCWa8zhPzRPw2",
-        'token'=>"FwoGZXIvYXdzEDsaDPDe5RWDN3jgOpcrCiLJAaFTXYr1x/cRzVxfopXchpZTL0L7uZmf4A2HWPFQZ2JLp0PNTVpTHqBcsFsWUS4VrqlkiNo4/Mb0KbJLlfgQAZxhjrea9a47ZpgoIvWhtQjk1vXKzVJMn/hfmKqB21CTvjGpbvqbG1k9SkO/LypYyW7g5PF5E2GSqFI6rZksWzVQZFzCTpjlu1V/caik1IXMQ5yDoJEWaNRfKYKcCTPDvJJhy61PqLM1zk48TPo9adApc1lBg7u44wJTw4y3RAff1mh5Wz2rS3qUryiPt6GbBjItWo+EJgsnkDyluD//EL86bzMV1EI/br3xbH86HDfA4RFnTqUfr7Mt7GuRcXRZ"
+	    'key'    => "ASIAXOBIIX4WXKPRNVPN",
+	    'secret' => "RhO+jT+RsTggyfOzSLKb2u6lw4h9eR3HoR7QFjMp",
+        'token'=>"FwoGZXIvYXdzEFIaDJNtXEyZmk4c4s+F1yLJAVjRpkmMNxKqx5DVKUBOM1ddxraff1Nm+uZLEzlvPoDVPeNjgFu8JIXOm+IYQvsIFUfX3PW4nIh93mAC3cgg6KZ3bWkc0abmwS0nT1OQsLSTWefmfom8mziAuDg7xXYsEYjXfNN6U/w0iNj+r858C/dYxLq0MeqsQ5nyhy2aWY6qzffGBMI9dO8L02lbDrCEqNqas6KpCj4I/4yiiH9WPG7nj+DGU7Xc37UazSdWw48umgM9oaoQYC7AK4ABP8BUlaRzC2JdEKwAMSi01aabBjItm/UAhnAAstmETOhd7jsKPvE0gbouEfeT8+VWTeVS+PeT6tSk+5Cj5EvbTkGI"
 	]
 ]);
 

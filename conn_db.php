@@ -1,5 +1,7 @@
 <?php
     $mysqli = new mysqli("localhost","root","","ucas");
+    //$mysqli = new mysqli("ddacp.co6fyvysy1hr.us-east-1.rds.amazonaws.com","admin","12345678","ucas");
+
 
     if($mysqli -> connect_errno){
         header("location: db_error.php");
