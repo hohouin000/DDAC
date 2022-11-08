@@ -6,7 +6,10 @@
         <div class="navbar-collapse collapse" id="navbarCollapse">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
                 <li class="nav-item">
-                    <a class="nav-link px-2 text-dark" href="cstaff-home.php">Home</a>
+                    <a class="nav-link px-2 text-dark" href="../cstaff/cstaff-home.php">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="../admin/admin-mng-user.php" class="nav-link px-2 text-dark">User Management</a>
                 </li>
                 <li class="nav-item">
                     <a href="../cstaff/cstaff-mng-menu.php" class="nav-link px-2 text-dark">Menu Management</a>

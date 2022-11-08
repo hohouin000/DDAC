@@ -45,7 +45,7 @@ if (mysqli_num_rows($result)) {
             
             $image_path = $result->get('ObjectURL');
             //echo "Image uploaded successfully. Image path is: ".$image_path;
-            $insert_query = "UPDATE mitem SET mitem_pic = '{$image_path}' WHERE mitem_id = {$mitem_id}} ";
+            $insert_query = "UPDATE mitem SET mitem_pic = '{$image_path}' WHERE mitem_id = {$mitem_id}";
             $insert_result = $mysqli->query($insert_query);
             if ($insert_result) {
                 $response['server_status'] = 1;

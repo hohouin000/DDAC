@@ -9,7 +9,6 @@ $rowcount = mysqli_num_rows($result);
 if ($rowcount > 0) {
     while ($row = $result->fetch_array()) {
         $array = [
-            "store_id" => $row['store_id'],
             "user_username" => $row['user_username'],
             "user_fname" => $row['user_fname'],
             "user_lname" => $row['user_lname'],
@@ -21,7 +20,6 @@ if ($rowcount > 0) {
     }
 } else {
     $array = [
-        "store_id" => '',
         "user_username" => '',
         "user_fname" => '',
         "user_lname" => '',

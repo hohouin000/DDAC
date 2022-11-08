@@ -50,7 +50,7 @@
               User(s) Registered in the System
             </p>
             <div class="text-end">
-              <a href="location:../admin-mng-user.php" class="btn btn-sm btn-outline-dark">Go to User Management</a>
+              <a href="../admin/admin-mng-user.php" class="btn btn-sm btn-outline-dark">Go to User Management</a>
             </div>
           </div>
         </div>
