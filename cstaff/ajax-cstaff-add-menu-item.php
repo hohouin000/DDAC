@@ -30,7 +30,7 @@ if (mysqli_num_rows($result)) {
     if (in_array($fileType, $allowTypes)) {
 
         $mitem_id = $mysqli->insert_id;
-        $bucket = 'ddac-pastry-tp053060';
+        #$bucket = 'ddac-pastry-tp053060';
         $temp_file_location = $_FILES['mitem-pic']['tmp_name'];
         $key = basename($fileName);
         try {

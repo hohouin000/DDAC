@@ -12,5 +12,7 @@ $s3Client = new Aws\S3\S3Client([
 	]
 ]);
 
+$bucket = 'ddac-pastry-tp053060';
+
 
 ?>

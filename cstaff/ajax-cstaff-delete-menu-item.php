@@ -4,7 +4,7 @@ include('../conn_db.php');
 include("../S3_conn.php");
 
 
-$bucket = 'ddac-pastry-tp053060';
+#$bucket = 'ddac-pastry-tp053060';
 
 if (!empty(($_POST['mitem_id']))) {
     $mitem_id = $_POST['mitem_id'];

@@ -15,7 +15,7 @@ if (!empty($_POST['mitem-id'])) {
     $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
     if (in_array($fileType, $allowTypes)) {
 
-        $bucket = 'ddac-pastry-tp053060';
+        
         
         //delete old image
         $query = "SELECT * FROM mitem WHERE mitem_id = '{$mitem_id}';";
