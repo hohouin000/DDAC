@@ -35,15 +35,15 @@ if (mysqli_num_rows($result)) {
         $key = basename($fileName);
         try {
             $result = $s3Client->putObject([
-            'Bucket' => $bucket,
-            'Key'    => $mitem_id.$key,
-            'Body'   => $temp_file_location,
-            'SourceFile' => $temp_file_location,
-            'ACL'    => 'public-read', // make file 'public'
-            'ContentType' => 'image/png',
+                'Bucket' => $bucket,
+                'Key'    => $mitem_id . $key,
+                'Body'   => $temp_file_location,
+                'SourceFile' => $temp_file_location,
+                'ACL'    => 'public-read', // make file 'public'
+                'ContentType' => 'image/png',
             ]);
-            
-            $image_path = $result->get('ObjectURL');
+
+            $image_path = "https://dcczugkilqv0c.cloudfront.net/" . basename($result->get('ObjectURL'));
             //echo "Image uploaded successfully. Image path is: ".$image_path;
             $insert_query = "UPDATE mitem SET mitem_pic = '{$image_path}' WHERE mitem_id = {$mitem_id}";
             $insert_result = $mysqli->query($insert_query);
@@ -58,8 +58,5 @@ if (mysqli_num_rows($result)) {
             // echo $e->getMessage();
             $response['server_status'] = 0;
         }
-       
-    
-       
     }
 }

@@ -15,13 +15,13 @@ if (!empty($_POST['mitem-id'])) {
     $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
     if (in_array($fileType, $allowTypes)) {
 
-        
-        
+
+
         //delete old image
         $query = "SELECT * FROM mitem WHERE mitem_id = '{$mitem_id}';";
         $result = $mysqli->query($query);
         $row = $result->fetch_array();
-       
+
         $mitem_pic = $row['mitem_pic'];
         $key = basename($mitem_pic);
         try {
@@ -37,32 +37,34 @@ if (!empty($_POST['mitem-id'])) {
 
 
         //upload image to S3
-       
-        
+
+
         $temp_file_location = $_FILES['mitem-pic']['tmp_name'];
         $key = basename($fileName);
         try {
             $result = $s3Client->putObject([
-            'Bucket' => $bucket,
-            'Key'    => $mitem_id.$key,
-            'Body'   => $temp_file_location,
-            'SourceFile' => $temp_file_location,
-            'ACL'    => 'public-read', // make file 'public'
-            'ContentType' => 'image/png',
+                'Bucket' => $bucket,
+                'Key'    => $mitem_id . $key,
+                'Body'   => $temp_file_location,
+                'SourceFile' => $temp_file_location,
+                'ACL'    => 'public-read', // make file 'public'
+                'ContentType' => 'image/png',
             ]);
-            
-            $image_path = $result->get('ObjectURL');
+
+            $image_path = "https://dcczugkilqv0c.cloudfront.net/" . basename($result->get('ObjectURL'));
             //echo "Image uploaded successfully. Image path is: ".$image_path;
             $query = "UPDATE mitem SET mitem_pic = '{$image_path}' WHERE mitem_id = {$mitem_id};";
             $result = $mysqli->query($query);
-            
+
             $response['server_status'] = 1;
+            echo json_encode($response);
         } catch (Aws\S3\Exception\S3Exception $e) {
             $response['server_status'] = 0;
+            echo json_encode($response);
             // echo "There was an error uploading the file.\n";
             // echo $e->getMessage();
         }
-        
+
 
         // Upload file to the server 
         // $target_dir = '/img/menu/';

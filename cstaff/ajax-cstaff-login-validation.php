@@ -15,7 +15,7 @@ if ($rowcount > 0) {
     $_SESSION["user_fname"] = $row["user_fname"];
     $_SESSION["user_lname"] = $row["user_lname"];
     $_SESSION["user_role"] = $row["user_role"];
-    $_SESSION["store_id"] = $row["store_id"];
+    // $_SESSION["store_id"] = $row["store_id"];
     $response['server_status'] = 1;
 } else {
     $response['server_status'] = 0;

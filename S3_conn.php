@@ -6,13 +6,10 @@ $s3Client = new Aws\S3\S3Client([
 	'version' => 'latest',
     'scheme' => 'http',
 	'credentials' => [
-	    'key'    => "ASIAXOBIIX4WXKPRNVPN",
-	    'secret' => "RhO+jT+RsTggyfOzSLKb2u6lw4h9eR3HoR7QFjMp",
-        'token'=>"FwoGZXIvYXdzEFIaDJNtXEyZmk4c4s+F1yLJAVjRpkmMNxKqx5DVKUBOM1ddxraff1Nm+uZLEzlvPoDVPeNjgFu8JIXOm+IYQvsIFUfX3PW4nIh93mAC3cgg6KZ3bWkc0abmwS0nT1OQsLSTWefmfom8mziAuDg7xXYsEYjXfNN6U/w0iNj+r858C/dYxLq0MeqsQ5nyhy2aWY6qzffGBMI9dO8L02lbDrCEqNqas6KpCj4I/4yiiH9WPG7nj+DGU7Xc37UazSdWw48umgM9oaoQYC7AK4ABP8BUlaRzC2JdEKwAMSi01aabBjItm/UAhnAAstmETOhd7jsKPvE0gbouEfeT8+VWTeVS+PeT6tSk+5Cj5EvbTkGI"
+	    'key'    => "ASIAXOBIIX4WSZCOGJEQ",
+	    'secret' => "FLjHWw9a6l4RLMXnQmDVQKYzl8HlGHVn0quccGID",
+        'token'=>"FwoGZXIvYXdzELr//////////wEaDNhzd1CCqcMcDFEr8iLJAUlyJY3eltiiHNiRaPYVAaxjAhZ75FtOePgRCZDlqVomWJBNMcKYMMFbvHu32R8JNgXBiPXqFeqRecdNusUBUlmhYXNoBMS+sSRqauvQ4mnCoH1Prn5DGlOh5NUN0sbat7VlXMhyk5Oooi5W+y7na8y9qxfvjZfN2RgDJ0j6UA0K83+QLfzr43taACy7MMy3m9+AVCdSW0l9u74pPnz99SiqteCuiO+Avf9jnbOeUE8Ew2gu048DKpV+E1ZEaLtQkbHGEnsSjvvOjyj23PWbBjItoEnWl5jD/N9Ypwjr9iN3OXedQpC0ZXAzE1srlk1IlJV/0k7/FTmNa6GuVvhH"
 	]
 ]);
 
 $bucket = 'ddac-pastry-tp053060';
-
-
-?>
