@@ -1,4 +1,6 @@
-<?php session_start();
+<?php 
+###################everytime when restart learner lab, need to go /root/.aws/credentials and update the credentials
+session_start();
 include("../conn_db.php");
 include("../S3_conn.php");
 require('../vendor/autoload.php');
