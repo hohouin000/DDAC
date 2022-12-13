@@ -7,7 +7,7 @@ $uploadDir = '/img/menu/';
 
 
 // Allowed file types 
-$allowTypes = array('png');
+$allowTypes = array('png','PNG');
 if (!empty($_POST['mitem-id'])) {
     $mitem_id = $_POST['mitem-id'];
     $fileName = basename($_FILES["mitem-pic"]["name"]);

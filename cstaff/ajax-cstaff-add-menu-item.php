@@ -7,7 +7,7 @@ $uploadDir = '/img/menu/';
 
 
 // Allowed file types 
-$allowTypes = array('png');
+$allowTypes = array('png','PNG');
 $mitem_name = $_POST['mitem-name'];
 $mitem_price = $_POST['mitem-price'];
 $mitem_status = $_POST['mitem-status'];
