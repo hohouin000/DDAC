@@ -10,6 +10,7 @@ class ComposerStaticInite4b4cae09227618f04698eb54fc38123
         'P' => 
         array (
             'Pkerrigan\\Xray\\' => 15,
+            'PHPMailer\\PHPMailer\\' => 20,
         ),
     );
 
@@ -17,6 +18,10 @@ class ComposerStaticInite4b4cae09227618f04698eb54fc38123
         'Pkerrigan\\Xray\\' => 
         array (
             0 => __DIR__ . '/..' . '/pkerrigan/xray/src',
+        ),
+        'PHPMailer\\PHPMailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
     );
 

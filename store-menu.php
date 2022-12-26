@@ -5,7 +5,22 @@
     <?php session_start();
     include("conn_db.php");
     include('head.php');
+    if (!isset($_GET["store_id"])) {
+        header("location: restricted.php");
+        exit(1);
+    }
 
+    if (isset($_GET["store_id"])) {
+        if (!empty($_GET["store_id"])) {
+            $store_id = mysqli_real_escape_string($mysqli, $_GET["store_id"]);
+        } else {
+            header("location: store-list.php");
+            exit(1);
+        }
+    } else {
+        header("location: store-list.php");
+        exit(1);
+    }
     ?>
     <title>Store Menu</title>
 </head>
@@ -16,10 +31,18 @@
     // $query = "SELECT * FROM store WHERE store_id = {$store_id}";
     // $result = $mysqli->query($query);
     // $row = $result->fetch_array();
-
+    $query = $mysqli->prepare("SELECT * FROM store WHERE store_id =?");
+    $query->bind_param('i', $store_id);
+    $query->execute();
+    $row = $query->get_result()->fetch_array();
+    $openhour = explode(":", $row["store_openhour"]);
+    $closehour = explode(":", $row["store_closehour"]);
     ?>
     <div class="container p-5" id="menu-dashboard" style="margin-top:5%;">
-     
+        <div class="row my-3">
+            <a class="nav nav-item text-decoration-none text-muted" href="store-list.php">
+                <i class="fa-solid fa-caret-left"> Go back</i></a>
+        </div>
         <?php
         if (isset($_SESSION['server_status'])) {
             if ($_SESSION['server_status'] == 1) {
@@ -41,16 +64,16 @@
             }
         }
         ?>
-        <h2 class="border-bottom pb-2"> Rong Sheng’s Famous Pastries and Cake</h2>
+        <h2 class="border-bottom pb-2"> <?php echo $row['store_name'] ?></h2>
         <p class="card-text my-2">
             <span class="h6">
                 Location:
-                <!-- <?php echo $row['store_location']; ?> -->
+                <?php echo $row['store_location']; ?>
         </p>
         <p class="card-text my-2">
             <span class="h6">
                 Operating hours:
-                <!-- <?php echo $openhour[0] . ":" . $openhour[1] . " - " . $closehour[0] . ":" . $closehour[1]; ?> -->
+                <?php echo $openhour[0] . ":" . $openhour[1] . " - " . $closehour[0] . ":" . $closehour[1]; ?>
         </p>
 
         <div class="container p-5" id="bestseller-dashboard" style="margin-top:2%;">
@@ -63,7 +86,8 @@
                 // $query = "SELECT m.mitem_name, m.mitem_id, m.mitem_price, m.mitem_pic, SUM(od.odr_detail_amount) AS total_volume FROM odr o INNER JOIN odr_detail od ON o.odr_id = od.odr_id INNER JOIN mitem m ON m.mitem_id = od.mitem_id WHERE o.store_id = '{$store_id}'  AND o.odr_status = 'CMPLT' AND NOT(m.mitem_status = 0 ) GROUP BY od.mitem_id ORDER BY Total_Volume DESC LIMIT 5;";
                 // $result = $mysqli->query($query);
                 // $rowcount = mysqli_num_rows($result);
-                $query = $mysqli->prepare("SELECT m.mitem_name, m.mitem_id, m.mitem_price, m.mitem_pic, SUM(od.odr_detail_amount) AS total_volume FROM odr o INNER JOIN odr_detail od ON o.odr_id = od.odr_id INNER JOIN mitem m ON m.mitem_id = od.mitem_id WHERE o.odr_status = 'CMPLT' AND NOT(m.mitem_status = 0 ) GROUP BY od.mitem_id ORDER BY Total_Volume DESC LIMIT 5;");
+                $query = $mysqli->prepare("SELECT m.mitem_name, m.mitem_id, m.mitem_price, m.mitem_pic, SUM(od.odr_detail_amount) AS total_volume FROM odr o INNER JOIN odr_detail od ON o.odr_id = od.odr_id INNER JOIN mitem m ON m.mitem_id = od.mitem_id WHERE o.store_id =?  AND o.odr_status = 'CMPLT' AND NOT(m.mitem_status = 0 ) GROUP BY od.mitem_id ORDER BY Total_Volume DESC LIMIT 5;");
+                $query->bind_param('i', $store_id);
                 $query->execute();
                 $result = $query->get_result();
                 $rowcount = $result->num_rows;
@@ -87,7 +111,7 @@
                                     </span>
                                     </p>
                                     <div class="text-end">
-                                        <a href="menu-item.php?<?php echo "&mitem_id=" . $row["mitem_id"] ?>" class="btn btn-sm btn-outline-dark">Add to Cart</a>
+                                        <a href="menu-item.php?<?php echo "store_id=" . $store_id . "&mitem_id=" . $row["mitem_id"] ?>" class="btn btn-sm btn-outline-dark">Add to Cart</a>
                                     </div>
                                 </div>
                             </div>
@@ -125,7 +149,8 @@
                 // $query = "SELECT * FROM mitem WHERE store_id = {$store_id} AND NOT(mitem_status = 0 )";
                 // $result = $mysqli->query($query);
                 // $rowcount = mysqli_num_rows($result);
-                $query = $mysqli->prepare("SELECT * FROM mitem WHERE NOT(mitem_status = 0 )");
+                $query = $mysqli->prepare("SELECT * FROM mitem WHERE store_id =? AND NOT(mitem_status = 0 )");
+                $query->bind_param('i', $store_id);
                 $query->execute();
                 $result = $query->get_result();
                 $rowcount = $result->num_rows;
@@ -149,7 +174,7 @@
                                     </span>
                                     </p>
                                     <div class="text-end">
-                                        <a href="menu-item.php?<?php echo "&mitem_id=" . $row["mitem_id"] ?>" class="btn btn-sm btn-outline-dark">Add to Cart</a>
+                                        <a href="menu-item.php?<?php echo "store_id=" . $store_id . "&mitem_id=" . $row["mitem_id"] ?>" class="btn btn-sm btn-outline-dark">Add to Cart</a>
                                     </div>
                                 </div>
                             </div>
