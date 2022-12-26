@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 08, 2022 at 07:56 AM
+-- Generation Time: Dec 26, 2022 at 07:07 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.28
 
@@ -18,10 +18,22 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ucas`
+-- Database: `ddac`
 --
-CREATE DATABASE IF NOT EXISTS `ucas` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `ucas`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cart`
+--
+
+CREATE TABLE `cart` (
+  `cart_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `mitem_id` int(11) NOT NULL,
+  `cart_amount` int(11) NOT NULL,
+  `cart_remark` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -42,10 +54,9 @@ CREATE TABLE `mitem` (
 --
 
 INSERT INTO `mitem` (`mitem_id`, `mitem_name`, `mitem_price`, `mitem_status`, `mitem_pic`) VALUES
-(11, 'Pan Mee Sup', '7.00', 1, 'mitem_id_11.png'),
-(12, 'Pan Mee Kari', '8.00', 1, 'mitem_id_12.png'),
-(13, 'Pan Mee Goreng', '8.00', 1, 'mitem_id_13.png'),
-(14, 'Pan Mee Mala', '9.00', 1, 'mitem_id_14.png');
+(32, 'Apple Puff', '5.00', 1, 'https://dcczugkilqv0c.cloudfront.net/32apple%20puff.png'),
+(33, 'Red Velvet Cake', '10.00', 1, 'https://dcczugkilqv0c.cloudfront.net/33cake.png'),
+(34, 'Kaya puff', '3.00', 1, 'https://dcczugkilqv0c.cloudfront.net/34Kaya%20puff.png');
 
 -- --------------------------------------------------------
 
@@ -55,28 +66,24 @@ INSERT INTO `mitem` (`mitem_id`, `mitem_name`, `mitem_price`, `mitem_status`, `m
 
 CREATE TABLE `odr` (
   `odr_id` int(11) NOT NULL,
-  `odr_ref` varchar(50) NOT NULL,
-  `odr_placedtime` timestamp NOT NULL DEFAULT current_timestamp(),
-  `odr_status` varchar(10) NOT NULL,
-  `odr_compltime` datetime DEFAULT NULL,
-  `user_id` int(11) NOT NULL
+  `odr_ref` varchar(30) NOT NULL,
+  `odr_placedtime` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `odr_status` varchar(20) NOT NULL,
+  `odr_compltime` datetime NOT NULL,
+  `odr_cxldtime` datetime NOT NULL,
+  `odr_rate_status` tinyint(4) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `payment_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `rating_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `odr`
 --
 
-INSERT INTO `odr` (`odr_id`, `odr_ref`, `odr_placedtime`, `odr_status`, `odr_compltime`, `user_id`) VALUES
-(1, 'ref1', '2022-10-01 10:05:21', 'CMPLT', '2022-10-01 20:05:21', 38),
-(2, 'ref2', '2022-10-02 08:05:21', 'CMPLT', '2022-10-02 20:05:21', 37),
-(3, 'ref3', '2022-10-03 12:05:21', 'CMPLT', '2022-10-03 20:05:21', 37),
-(4, 'ref4', '2022-10-04 10:05:21', 'CMPLT', '2022-10-04 20:05:21', 38),
-(5, 'ref5', '2022-10-05 10:05:21', 'CMPLT', '2022-10-05 20:05:21', 37),
-(6, 'ref6', '2022-10-06 10:08:18', 'CMPLT', '2022-10-06 20:08:18', 37),
-(7, 'ref7', '2022-10-07 12:08:18', 'CMPLT', '2022-10-07 20:08:18', 38),
-(8, 'ref8', '2022-10-08 12:08:55', 'CMPLT', '2022-10-08 20:08:55', 37),
-(9, 'ref9', '2022-10-09 12:08:55', 'CMPLT', '2022-10-09 20:08:55', 38),
-(10, 'ref10', '2022-10-10 12:08:55', 'CMPLT', '2022-10-10 20:08:55', 38);
+INSERT INTO `odr` (`odr_id`, `odr_ref`, `odr_placedtime`, `odr_status`, `odr_compltime`, `odr_cxldtime`, `odr_rate_status`, `store_id`, `payment_id`, `user_id`, `rating_id`) VALUES
+(22, '20221226F64EOID22', '2022-12-26 06:02:16', 'PREP', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0, 32, 44, NULL);
 
 -- --------------------------------------------------------
 
@@ -98,16 +105,28 @@ CREATE TABLE `odr_detail` (
 --
 
 INSERT INTO `odr_detail` (`odr_detail_id`, `odr_id`, `mitem_id`, `odr_detail_amount`, `odr_detail_price`, `odr_detail_remark`) VALUES
-(1, 1, 13, 2, '8.00', 'No Fungus Mushroom'),
-(2, 2, 11, 2, '7.00', ''),
-(5, 5, 12, 1, '8.00', ''),
-(6, 5, 11, 1, '7.00', 'No Anchovies'),
-(7, 6, 14, 1, '9.00', ''),
-(8, 7, 13, 2, '8.00', 'More Soy Sauce'),
-(9, 8, 14, 3, '9.00', ''),
-(11, 10, 14, 2, '9.00', ''),
-(12, 10, 11, 1, '7.00', ''),
-(13, 10, 12, 2, '8.00', '');
+(38, 22, 32, 3, '5.00', ''),
+(39, 22, 33, 1, '10.00', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payment`
+--
+
+CREATE TABLE `payment` (
+  `payment_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `payment_type` varchar(10) NOT NULL,
+  `payment_amount` decimal(7,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `payment`
+--
+
+INSERT INTO `payment` (`payment_id`, `user_id`, `payment_type`, `payment_amount`) VALUES
+(32, 44, 'PAC', '25.00');
 
 -- --------------------------------------------------------
 
@@ -130,8 +149,7 @@ CREATE TABLE `store` (
 --
 
 INSERT INTO `store` (`store_id`, `store_name`, `store_location`, `store_openhour`, `store_closehour`, `store_status`, `store_pic`) VALUES
-(35, 'Pan Mee', 'Lot 2', '07:32:00', '18:25:00', 0, 'store_id_35.png'),
-(37, 'indian', 'black', '23:19:00', '15:25:00', 1, 'store_id_37.png');
+(35, 'Pan Mee', 'Lot 2', '07:32:00', '18:25:00', 1, 'store_id_35.png');
 
 -- --------------------------------------------------------
 
@@ -154,15 +172,26 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `user_username`, `user_pwd`, `user_email`, `user_fname`, `user_lname`, `user_role`) VALUES
-(30, 'foong', '12345678', 'foong@mail.com', 'foong', 'wai tuck', 'CSTAFF'),
+(30, 'foongG', '12345678', 'foong@mail.com', 'foongg', 'wai tuck', 'CSTAFF'),
 (31, 'goh', '12345678', 'goh@mail.com', 'goh', 'teng song', 'CSTAFF'),
 (37, 'hui', '12345678', 'hui@gmail.com', 'hui', 'hui', 'CUST'),
 (38, 'nigga', '12345678', 'nigga@mail.com', 'black', 'nigga', 'CUST'),
-(39, 'junshen', '12345678', 'huihui@gmail.com', 'jun', 'shen', 'CSTAFF');
+(39, 'junshen', '12345678', 'huihui@gmail.com', 'jun', 'shen', 'CSTAFF'),
+(42, 'HEHEH', '12345678', 'haolliao@gmail.com', 'Teng song', 'Goh', 'CUST'),
+(43, 'test1', '12345678', 'haolliao@gmail.com', 'GGGG', 'GGGG', 'CUST'),
+(44, 'Test2', '87654321', 'gohtengsong98@gmail.com', 'HH', 'aA', 'CUST');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `cart`
+--
+ALTER TABLE `cart`
+  ADD PRIMARY KEY (`cart_id`),
+  ADD KEY `user_id-cart_table` (`user_id`),
+  ADD KEY `mitem_id-cart_table` (`mitem_id`);
 
 --
 -- Indexes for table `mitem`
@@ -175,6 +204,9 @@ ALTER TABLE `mitem`
 --
 ALTER TABLE `odr`
   ADD PRIMARY KEY (`odr_id`),
+  ADD KEY `payment_id-odr_table` (`payment_id`),
+  ADD KEY `rating_id-odr_table` (`rating_id`),
+  ADD KEY `store_id-odr_table` (`store_id`),
   ADD KEY `user_id-odr_table` (`user_id`);
 
 --
@@ -184,6 +216,13 @@ ALTER TABLE `odr_detail`
   ADD PRIMARY KEY (`odr_detail_id`),
   ADD KEY `mitem_id-odr_details_table` (`mitem_id`),
   ADD KEY `odr_id-odr_details_table` (`odr_id`);
+
+--
+-- Indexes for table `payment`
+--
+ALTER TABLE `payment`
+  ADD PRIMARY KEY (`payment_id`),
+  ADD KEY `user_id-payment-table` (`user_id`);
 
 --
 -- Indexes for table `store`
@@ -202,22 +241,34 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `cart`
+--
+ALTER TABLE `cart`
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT for table `mitem`
 --
 ALTER TABLE `mitem`
-  MODIFY `mitem_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `mitem_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `odr`
 --
 ALTER TABLE `odr`
-  MODIFY `odr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `odr_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `odr_detail`
 --
 ALTER TABLE `odr_detail`
-  MODIFY `odr_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `odr_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+
+--
+-- AUTO_INCREMENT for table `payment`
+--
+ALTER TABLE `payment`
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `store`
@@ -229,17 +280,18 @@ ALTER TABLE `store`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `odr`
+-- Constraints for table `cart`
 --
-ALTER TABLE `odr`
-  ADD CONSTRAINT `user_id-odr_table` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `cart`
+  ADD CONSTRAINT `mitem_id-cart_table` FOREIGN KEY (`mitem_id`) REFERENCES `mitem` (`mitem_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `user_id-cart_table` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `odr_detail`
@@ -247,6 +299,12 @@ ALTER TABLE `odr`
 ALTER TABLE `odr_detail`
   ADD CONSTRAINT `mitem_id-odr_details_table` FOREIGN KEY (`mitem_id`) REFERENCES `mitem` (`mitem_id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `odr_id-odr_details_table` FOREIGN KEY (`odr_id`) REFERENCES `odr` (`odr_id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `payment`
+--
+ALTER TABLE `payment`
+  ADD CONSTRAINT `user_id-payment-table` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
