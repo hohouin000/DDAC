@@ -18,8 +18,7 @@
         exit(1);
     }
     ?>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.1.0/dist/chartjs-plugin-datalabels.min.js" integrity="sha256-ObWzUwdMWsPTwdkX/Fy6qojnkW+RkgciyUrmSD3upw0=" crossorigin="anonymous"></script>
+    
     <style>
         @media print {
             canvas.mpChart {
@@ -220,6 +219,7 @@
     $query = "SELECT m.mitem_name, SUM(od.odr_detail_amount) AS total_amount, SUM(od.odr_detail_amount*od.odr_detail_price) AS sub_total FROM odr o INNER JOIN odr_detail od ON o.odr_id = od.odr_id INNER JOIN mitem m ON od.mitem_id = m.mitem_id WHERE odr_status = 'CMPLT' AND (DATE(odr_compltime) BETWEEN DATE('{$start_date}') AND DATE('{$end_date}')) GROUP BY mitem_name ORDER BY total_amount, sub_total;";
     $result = $mysqli->query($query);
     $rowcount = mysqli_num_rows($result);
+    print_r($rowcount);
     if ($rowcount > 0) {
         while ($row = $result->fetch_array()) {
             $mitem_name[] = $row['mitem_name'];
@@ -265,11 +265,11 @@
         const data = {
             labels: labels,
             datasets: [{
-                    label: 'Sub Total Sales (RM)',
+                    label: 'Total Sales (RM)',
                     data: <?php echo json_encode($sub_total) ?>,
                     borderColor: 'rgb(255, 99, 132)',
                     backgroundColor: 'rgba(93, 190, 255, 0.3)',
-                    stack: 'combined',
+                    //stack: 'combined',
                     type: 'bar',
                 },
                 {
@@ -278,14 +278,14 @@
                     borderColor: 'rgb(255, 99, 132)',
                     pointBackgroundColor: 'rgb(255, 255, 255)',
                     backgroundColor: 'rgba(255, 99, 132, 0.3)',
-                    stack: 'combined',
-
+                    //stack: 'combined',
+                    type: 'bar',
                 },
             ]
         };
 
         const config = {
-            type: 'line',
+            type: 'bar',
             data: data,
             options: {
                 plugins: {
@@ -311,7 +311,7 @@
                 },
                 scales: {
                     y: {
-                        stacked: true
+                        beginAtZero: true
                     }
                 },
                 elements: {
