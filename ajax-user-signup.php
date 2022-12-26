@@ -1,5 +1,6 @@
 <?php session_start();
 include("conn_db.php");
+include("SNS_conn.php");
 
 if (isset($_POST['user_fname'], $_POST['user_lname'], $_POST['user_pwd'], $_POST['user_username'], $_POST['user_email'])) {
     if (!empty($_POST['user_fname']) && !empty($_POST['user_lname']) &&  !empty($_POST['user_pwd']) &&  !empty($_POST['user_username']) &&  !empty($_POST['user_email'])) {
@@ -51,9 +52,27 @@ if (isset($_POST['user_fname'], $_POST['user_lname'], $_POST['user_pwd'], $_POST
             $insert_query->bind_param('ssssss', $user_username, $user_fname, $user_lname, $user_pwd, $user_role, $user_email);
             $insert_result = $insert_query->execute();
             if ($insert_result) {
-                $response['server_status'] = 1;
-                echo json_encode($response);
-                exit(1);
+                try {
+                    $result = $SnSclient->subscribe([
+                        'Protocol' => $protocol,
+                        'Endpoint' => $user_email,
+                        'ReturnSubscriptionArn' => true,
+                        'TopicArn' => $topic,
+                    ]);
+                    
+                    var_dump($result);
+                    $response['server_status'] = 1;
+                    echo json_encode($response);
+                    exit(1);
+                } catch (Aws\Exception\AwsException $e) {
+                    // output error message if fails
+                    error_log($e->getMessage());
+                    $response['server_status'] = 0;
+                    echo json_encode($response);
+                    exit(1);
+                    
+                } 
+                
             } else {
                 $response['server_status'] = 0;
                 echo json_encode($response);

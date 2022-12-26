@@ -1,5 +1,6 @@
 <?php session_start();
 include("conn_db.php");
+include("SNS_conn.php");
 
 if (isset($_POST['user_fname'], $_POST['user_lname'], $_POST['user_username'], $_POST['user_email'],  $_POST['user_id'])) {
     if (!empty($_POST['user_fname']) && !empty($_POST['user_lname']) &&  !empty($_POST["user_username"]) && !empty($_POST["user_email"]) && !empty($_POST["user_id"])) {
@@ -31,7 +32,23 @@ if (isset($_POST['user_fname'], $_POST['user_lname'], $_POST['user_username'], $
         $result = $query->execute();
 
         if ($result) {
-            $response['server_status'] = 1;
+            try {
+                $result = $SnSclient->subscribe([
+                    'Protocol' => $protocol,
+                    'Endpoint' => $user_email,
+                    'ReturnSubscriptionArn' => true,
+                    'TopicArn' => $topic,
+                ]);
+                
+                //var_dump($result);
+                $response['server_status'] = 1;
+                
+            } catch (Aws\Exception\AwsException $e) {
+                // output error message if fails
+                error_log($e->getMessage());
+                $response['server_status'] = 0;
+            } 
+            //$response['server_status'] = 1;
         } else {
             $response['server_status'] = 0;
         }

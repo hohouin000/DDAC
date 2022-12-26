@@ -14,22 +14,10 @@ $SnSclient = new SnsClient([
 ]);
 
 $protocol = 'email';
-$endpoint = 'wtfoong81@gmail.com';
+//$endpoint = 'wtfoong81@gmail.com';
 $topic = 'arn:aws:sns:us-east-1:511185567533:DDACAssignmentPastry';
 
-try {
-    $result = $SnSclient->subscribe([
-        'Protocol' => $protocol,
-        'Endpoint' => $endpoint,
-        'ReturnSubscriptionArn' => true,
-        'TopicArn' => $topic,
-    ]);
-	
-    var_dump($result);
-} catch (Aws\Exception\AwsException $e) {
-    // output error message if fails
-    error_log($e->getMessage());
-} 
+
 
 $message = 'Christmas is near and we have a bunch of chirstmas offers...XD';
 $subject = 'pastry promotions';
