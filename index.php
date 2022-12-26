@@ -45,12 +45,12 @@
         <p class="card-text my-2">
             <span class="h6">
                 Location:
-                <!-- <?php echo $row['store_location']; ?> -->
+                Klang
         </p>
         <p class="card-text my-2">
             <span class="h6">
                 Operating hours:
-                <!-- <?php echo $openhour[0] . ":" . $openhour[1] . " - " . $closehour[0] . ":" . $closehour[1]; ?> -->
+                8:00 am to 6:00 pm
         </p>
 
         <div class="container p-5" id="bestseller-dashboard" style="margin-top:2%;">

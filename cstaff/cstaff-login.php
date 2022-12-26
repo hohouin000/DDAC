@@ -11,7 +11,7 @@
   ?>
   <?php include('../head.php'); ?>
   <link href="../css/login.css" rel="stylesheet" />
-  <title>Log in | Cafeteria Staff</title>
+  <title>Log in | Staff</title>
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -21,7 +21,7 @@
     <div class="container form-signin mt-auto">
       <form class="form-floating" id="form-cstaff-login">
         <h2 class="mt-5 mb-3 fw-normal text-bold">
-          <i class="bi bi-people"></i> Cafeteria Staff Login
+          <i class="bi bi-people"></i> Staff Login
         </h2>
         <div class="form-floating mb-3">
           <input type="text" class="form-control" id="form-login-username" placeholder="admin_username" required />

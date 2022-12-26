@@ -40,7 +40,7 @@
                 </div>
               </form>
               <div class="alert alert-dark mt-3" role="alert">
-                Click <a href="cstaff/cstaff-login.php" class="alert-link">here</a> to login as cafeteria staff.
+                Click <a href="cstaff/cstaff-login.php" class="alert-link">here</a> to login as staff.
               </div>
             </div>
           </div>
