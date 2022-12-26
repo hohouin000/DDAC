@@ -95,7 +95,7 @@
                                             <div class="col-lg-3 col-md-12 mb-4 mb-lg-0">
                                                 <!-- Image -->
                                                 <div class="img-fluid rounded">
-                                                    <img <?php echo "src=\"img/menu/{$row['mitem_pic']}\""; ?> class="w-100" style="width:100%; height:175px; object-fit:cover;" alt="<?php echo $row["mitem_name"] ?>" />
+                                                    <img <?php echo "src=\"{$row['mitem_pic']}\""; ?> class="w-100" style="width:100%; height:175px; object-fit:cover;" alt="<?php echo $row["mitem_name"] ?>" />
                                                 </div>
                                                 <!-- Image -->
                                             </div>

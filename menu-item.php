@@ -45,7 +45,7 @@
         <div class="row row-cols-1 row-cols-md-2 mb-5">
             <div class="col mb-3 mb-md-0">
                 <img <?php
-                        echo "src=\"img/menu/{$row['mitem_pic']}\"";
+                        echo "src=\"{$row['mitem_pic']}\"";
                         ?> class="img-fluid rounded-25 float-start" style="width:300%; height:450px;" alt="<?php echo $row["mitem_name"] ?>">
             </div>
             <div class="col text-wrap">

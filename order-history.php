@@ -72,7 +72,7 @@
                                 <div class="card border-info mb-3">
                                     <div class="card-body">
                                         <h5 class="card-title">Order Ref: <?php echo $row['odr_ref'] ?></h5>
-                                        <p class="card-text"><?php echo $row['itemcount'] ?> Item(s) <br />Store: <?php echo $row['store_name'] ?><br />Order Placed: <?php echo date("jS-M-Y H:ia", strtotime($row['odr_placedtime'])) ?></p>
+                                        <p class="card-text"><?php echo $row['itemcount'] ?> Item(s) <br />Store: Rong Sheng’s Famous Pastries and Cake<br />Order Placed: <?php echo date("jS-M-Y H:ia", strtotime($row['odr_placedtime'])) ?></p>
                                         <a href="order-details.php?odr_id=<?php echo $row['odr_id'] ?>" class="btn btn-outline-info">View Details</a>
                                     </div>
                                 </div>

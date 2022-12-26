@@ -74,7 +74,7 @@
                             <div class="card border-info p-25">
                                 <div class="card-body">
                                     <img <?php
-                                            echo "src=\"img/menu/{$row['mitem_pic']}\"";
+                                            echo "src=\"{$row['mitem_pic']}\"";
                                             ?> style="width:100%; height:175px; object-fit:cover;" class="card-img-top rounded-25 img-fluid" alt="<?php echo $row["mitem_name"] ?>">
                                     <h5 class="card-title" style="margin-top:5%;">
                                         <?php echo $row["mitem_name"] ?>
@@ -136,7 +136,7 @@
                             <div class="card border-info p-25">
                                 <div class="card-body">
                                     <img <?php
-                                            echo "src=\"img/menu/{$row['mitem_pic']}\"";
+                                            echo "src=\"{$row['mitem_pic']}\"";
                                             ?> style="width:100%; height:175px; object-fit:cover;" class="card-img-top rounded-25 img-fluid" alt="<?php echo $row["mitem_name"] ?>">
                                     <h5 class="card-title" style="margin-top:5%;">
                                         <?php echo $row["mitem_name"] ?>
