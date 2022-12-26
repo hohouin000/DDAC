@@ -1,5 +1,5 @@
 <?php
-require '../aws/aws-autoloader.php';
+require 'aws/aws-autoloader.php';
 
 $s3Client = new Aws\S3\S3Client([
 	'region'  => 'us-east-1',
