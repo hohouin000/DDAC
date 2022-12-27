@@ -84,58 +84,68 @@
             "install-path": "../phpmailer/phpmailer"
         },
         {
-            "name": "pkerrigan/xray",
-            "version": "v1.0.0",
-            "version_normalized": "1.0.0.0",
+            "name": "stripe/stripe-php",
+            "version": "v10.3.0",
+            "version_normalized": "10.3.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/patrickkerrigan/php-xray.git",
-                "reference": "424ce104a936502f6350caf404e7e0f95d08ca7f"
+                "url": "https://github.com/stripe/stripe-php.git",
+                "reference": "417d66a5b27a5ec53a706a346b05bfe170043d52"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/patrickkerrigan/php-xray/zipball/424ce104a936502f6350caf404e7e0f95d08ca7f",
-                "reference": "424ce104a936502f6350caf404e7e0f95d08ca7f",
+                "url": "https://api.github.com/repos/stripe/stripe-php/zipball/417d66a5b27a5ec53a706a346b05bfe170043d52",
+                "reference": "417d66a5b27a5ec53a706a346b05bfe170043d52",
                 "shasum": ""
             },
             "require": {
+                "ext-curl": "*",
                 "ext-json": "*",
-                "php": ">=7.0"
+                "ext-mbstring": "*",
+                "php": ">=5.6.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^6"
+                "friendsofphp/php-cs-fixer": "3.5.0",
+                "php-coveralls/php-coveralls": "^2.5",
+                "phpstan/phpstan": "^1.2",
+                "phpunit/phpunit": "^5.7 || ^9.0",
+                "squizlabs/php_codesniffer": "^3.3"
             },
-            "time": "2018-05-19T14:30:32+00:00",
+            "time": "2022-12-22T20:07:30+00:00",
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                }
+            },
             "installation-source": "dist",
             "autoload": {
                 "psr-4": {
-                    "Pkerrigan\\Xray\\": "src/"
+                    "Stripe\\": "lib/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "BSD-3-Clause"
+                "MIT"
             ],
             "authors": [
                 {
-                    "name": "Patrick Kerrigan",
-                    "homepage": "https://patrickkerrigan.uk/"
+                    "name": "Stripe and contributors",
+                    "homepage": "https://github.com/stripe/stripe-php/contributors"
                 }
             ],
-            "description": "A basic PHP instrumentation library for AWS X-Ray",
+            "description": "Stripe PHP Library",
+            "homepage": "https://stripe.com/",
             "keywords": [
-                "AWS X-Ray",
-                "X-Ray",
-                "apm",
-                "aws",
-                "tracing"
+                "api",
+                "payment processing",
+                "stripe"
             ],
             "support": {
-                "issues": "https://github.com/patrickkerrigan/php-xray/issues",
-                "source": "https://github.com/patrickkerrigan/php-xray/tree/master"
+                "issues": "https://github.com/stripe/stripe-php/issues",
+                "source": "https://github.com/stripe/stripe-php/tree/v10.3.0"
             },
-            "install-path": "../pkerrigan/xray"
+            "install-path": "../stripe/stripe-php"
         }
     ],
     "dev": true,
