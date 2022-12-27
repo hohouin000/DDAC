@@ -7,6 +7,7 @@ require('../vendor/autoload.php');
     use Pkerrigan\Xray\Trace;
     use Pkerrigan\Xray\Submission\DaemonSegmentSubmitter;
     use Pkerrigan\Xray\SqlSegment;
+    use Pkerrigan\Xray\RemoteSegment;
 use Pkerrigan\Xray\HttpSegment;
 
     Trace::getInstance()
@@ -41,6 +42,9 @@ Trace::getInstance()
     );
 
 $result = $mysqli->query($queryValidate);
+Trace::getInstance()
+->getCurrentSegment()
+->end();
 if (mysqli_num_rows($result)) {
     $response['server_status'] = 0;
     echo json_encode($response);
@@ -60,6 +64,14 @@ if (mysqli_num_rows($result)) {
         #$bucket = 'ddac-pastry-tp053060';
         $temp_file_location = $_FILES['mitem-pic']['tmp_name'];
         $key = basename($fileName);
+        Trace::getInstance()
+    ->getCurrentSegment()
+    ->addSubsegment(
+        (new RemoteSegment())
+            ->setName('S3')
+            ->begin()    
+    );
+
         try {
             $result = $s3Client->putObject([
                 'Bucket' => $bucket,
@@ -69,7 +81,10 @@ if (mysqli_num_rows($result)) {
                 'ACL'    => 'public-read', // make file 'public'
                 'ContentType' => 'image/png',
             ]);
-             Trace::getInstance()
+            Trace::getInstance()
+    ->getCurrentSegment()
+    ->end();
+             Trace::getInstance() //not needed, only to test image show speed
     ->getCurrentSegment()
     ->addSubsegment(
         (new HttpSegment())
@@ -96,9 +111,7 @@ if (mysqli_num_rows($result)) {
         }
     }
 
- Trace::getInstance()
-    ->getCurrentSegment()
-    ->end();
+
  Trace::getInstance()
     ->getCurrentSegment()
     ->end();
