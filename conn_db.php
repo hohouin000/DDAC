@@ -1,10 +1,6 @@
 <?php
 $mysqli = new mysqli("localhost", "root", "", "ddac");
-<<<<<<< HEAD
-// $mysqli = new mysqli("ddac.co6fyvysy1hr.us-east-1.rds.amazonaws.com","admin","12345678","ucas");
-=======
 //$mysqli = new mysqli("ddac.co6fyvysy1hr.us-east-1.rds.amazonaws.com","admin","12345678","ucas");
->>>>>>> 0a8f8954211c3e6267ea10a5cc956592b575ffca
 
 
 if ($mysqli->connect_errno) {
