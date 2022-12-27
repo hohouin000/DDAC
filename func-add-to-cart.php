@@ -73,7 +73,7 @@ if (isset($_POST['mitem-id'],  $_POST['amount'], $_POST['remark'])) {
                     // $query = "UPDATE cart SET cart_amount = {$new_cart_amount} WHERE user_id = {$user_id} AND mitem_id = {$mitem_id} AND store_id = {$store_id}";
                     // $added_result = $mysqli->query($query);
                     $query = $mysqli->prepare("UPDATE cart SET cart_amount =? WHERE user_id =? AND mitem_id =? ;");
-                    $query->bind_param('iiii', $new_cart_amount, $user_id, $mitem_id);
+                    $query->bind_param('iii', $new_cart_amount, $user_id, $mitem_id);
                     $added_result = $query->execute();
                 }
              
