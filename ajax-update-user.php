@@ -40,7 +40,6 @@ if (isset($_POST['user_fname'], $_POST['user_lname'], $_POST['user_username'], $
                     'TopicArn' => $topic,
                 ]);
                 
-                //var_dump($result);
                 $response['server_status'] = 1;
                 
             } catch (Aws\Exception\AwsException $e) {

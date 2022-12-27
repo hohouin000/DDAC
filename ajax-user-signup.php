@@ -60,19 +60,16 @@ if (isset($_POST['user_fname'], $_POST['user_lname'], $_POST['user_pwd'], $_POST
                         'TopicArn' => $topic,
                     ]);
                     
-                    var_dump($result);
                     $response['server_status'] = 1;
                     echo json_encode($response);
                     exit(1);
                 } catch (Aws\Exception\AwsException $e) {
                     // output error message if fails
-                    error_log($e->getMessage());
+                    //error_log($e->getMessage());
                     $response['server_status'] = 0;
                     echo json_encode($response);
                     exit(1);
-                    
-                } 
-                
+                }
             } else {
                 $response['server_status'] = 0;
                 echo json_encode($response);
