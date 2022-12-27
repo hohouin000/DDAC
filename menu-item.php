@@ -61,24 +61,6 @@
                             <label for="remark" class="d-inline-text">Remark (Optional)</label>
                         </div>
                         <button class="btn btn-info w-100" type="submit" title="add-to-cart" name="btn-submit" id="btn-submit">
-                            <?php
-                            // $query = "SELECT COUNT(*) AS itemcnt FROM cart WHERE user_id = {$_SESSION['user_id']}";
-                            // $row = $mysqli->query($query)->fetch_array();
-                            $query = $mysqli->prepare("SELECT COUNT(*) AS itemcnt FROM cart WHERE user_id =?");
-                            $query->bind_param('i', $_SESSION['user_id']);
-                            $query->execute();
-                            $row = $query->get_result()->fetch_array();
-                            if ($row["itemcnt"] > 0) {
-                                // $query2 = "SELECT COUNT(*) AS itemcnt FROM cart WHERE user_id = {$_SESSION['user_id']} AND store_id = {$store_id}";
-                                // $row2 = $mysqli->query($query2)->fetch_array();
-                                $query2 = $mysqli->prepare("SELECT COUNT(*) AS itemcnt FROM cart WHERE user_id =?");
-                                $query2->bind_param('i', $_SESSION['user_id']);
-                                $query2->execute();
-                                $row2 = $query2->get_result()->fetch_array();
-                                // if ($row2["itemcnt"] == 0) { 
-                                // }
-                            }
-                            ?>
                             <i class="fa-solid fa-cart-shopping"></i> Add to Cart
                         </button>
                         <input type="hidden" name="mitem-id" value="<?php echo $mitem_id ?>">
@@ -88,20 +70,6 @@
         </div>
     </div>
     <?php include('footer.php'); ?>
-    <script>
-        $(document).ready(function() {
-            $("#form-atc").on('submit', function(e) {
-                var cnt = "<?php echo $row2["itemcnt"]; ?>";
-                if (cnt == 0) {
-                    e.preventDefault();
-                    alertify.confirm('Store Change Notification', 'You have already selected different store. If you wish to continue, the current items added in your cart will be automatically removed.', function() {
-                            $("#form-atc")[0].submit();
-                        },
-                        function() {});
-                }
-            });
-        });
-    </script>
 </body>
 
 </html>

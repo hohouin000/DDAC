@@ -24,18 +24,40 @@
             </div>
             <h2 class="pt-3 display-6">Broadcast Message</h2>
         </div>
+        <?php
+
+        if (isset($_SESSION['server_status'])) {
+            if ($_SESSION['server_status'] == 1) {
+        ?>
+                <div class="alert alert-success alert-dismissible fade show mt-3 mb-3" role="alert">
+                    Message Sent Successfully !
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            <?php
+                unset($_SESSION['server_status']);
+            } else {
+            ?>
+                <div class="alert alert-warning alert-dismissible fade show mt-3 mb-3" role="alert">
+                    Failed to send message !
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+        <?php
+                unset($_SESSION['server_status']);
+            }
+        }
+        ?>
         <div class="container d-flex justify-content-center mt-5">
             <div class="card text-center" style="border: none;">
                 <div class="card-body">
                     <div class="rate py-3 mt-3">
-                        <form>
+                        <form method="POST" action="func-broadcast-message.php">
                             <div class="mb-3 mt-3">
                                 <label for="comment" class="form-label">Title</label>
-                                <input class="form-control" id="comment" name="comment" rows="5" maxlength="100"></input>
+                                <input class="form-control" name="title" rows="5" maxlength="100"></input>
                             </div>
                             <div class="mb-3 mt-3">
                                 <label for="comment" class="form-label">Content</label>
-                                <textarea class="form-control" id="comment" name="comment" rows="5"></textarea>
+                                <textarea class="form-control" name="content" rows="5"></textarea>
                             </div>
                             <div class="buttons px-4 mb-3">
                                 <button type="submit" class="btn btn-outline-primary btn-block">Submit</button>
