@@ -32,6 +32,9 @@ if (isset($_POST['user_fname'], $_POST['user_lname'], $_POST['user_username'], $
         $result = $query->execute();
 
         if ($result) {
+            $_SESSION["user_username"] = $user_username;
+            $_SESSION["user_fname"] = $user_fname;
+            $_SESSION["user_lname"] = $user_lname;
             try {
                 $result = $SnSclient->subscribe([
                     'Protocol' => $protocol,
