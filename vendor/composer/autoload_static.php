@@ -13,6 +13,7 @@ class ComposerStaticInitd4822cedfd74c160f94eb1297c40363e
         ),
         'P' => 
         array (
+            'Pkerrigan\\Xray\\' => 15,
             'PHPMailer\\PHPMailer\\' => 20,
         ),
     );
@@ -21,6 +22,10 @@ class ComposerStaticInitd4822cedfd74c160f94eb1297c40363e
         'Stripe\\' => 
         array (
             0 => __DIR__ . '/..' . '/stripe/stripe-php/lib',
+        ),
+        'Pkerrigan\\Xray\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/pkerrigan/xray/src',
         ),
         'PHPMailer\\PHPMailer\\' => 
         array (

@@ -1,6 +1,7 @@
 {
     "require": {
         "stripe/stripe-php": "^10.3",
-        "phpmailer/phpmailer": "^6.7"
+        "phpmailer/phpmailer": "^6.7",
+        "pkerrigan/xray": "1"
     }
 }
