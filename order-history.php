@@ -116,7 +116,7 @@
                                     <div class="card border-success mb-3">
                                         <div class="card-body">
                                             <h5 class="card-title">Order Ref: <?php echo $row['odr_ref'] ?></h5>
-                                            <p class="card-text"><?php echo $row['itemcount'] ?> Item(s) <br />Store: <?php echo $row['store_name'] ?><br />Order Completed: <?php echo date("jS-M-Y H:ia", strtotime($row['odr_compltime'])) ?></p>
+                                            <p class="card-text"><?php echo $row['itemcount'] ?> Item(s) <br />Store: Rong Sheng’s Famous Pastries and Cake<br />Order Completed: <?php echo date("jS-M-Y H:ia", strtotime($row['odr_compltime'])) ?></p>
                                             <a href="order-details.php?odr_id=<?php echo $row['odr_id'] ?>" class="btn btn-outline-success">View Details</a>
                                         </div>
                                     </div>
@@ -161,7 +161,7 @@
                                     <div class="card border-danger mb-3">
                                         <div class="card-body">
                                             <h5 class="card-title">Order Ref: <?php echo $row['odr_ref'] ?></h5>
-                                            <p class="card-text"><?php echo $row['itemcount'] ?> Item(s) <br />Store: <?php echo $row['store_name'] ?><br />Order Cancelled: <?php echo date("jS-M-Y H:ia", strtotime($row['odr_cxldtime'])) ?></p>
+                                            <p class="card-text"><?php echo $row['itemcount'] ?> Item(s) <br />Store: Rong Sheng’s Famous Pastries and Cake<br />Order Cancelled: <?php echo date("jS-M-Y H:ia", strtotime($row['odr_cxldtime'])) ?></p>
                                             <a href="order-details.php?odr_id=<?php echo $row['odr_id'] ?>" class="btn btn-outline-danger">View Details</a>
                                         </div>
                                     </div>
