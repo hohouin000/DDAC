@@ -1,6 +1,20 @@
 <?php session_start();
 include("../conn_db.php");
 include("../S3_conn.php");
+require('../vendor/autoload.php');
+    use Pkerrigan\Xray\Trace;
+    use Pkerrigan\Xray\Submission\DaemonSegmentSubmitter;
+    use Pkerrigan\Xray\SqlSegment;
+    use Pkerrigan\Xray\RemoteSegment;
+use Pkerrigan\Xray\HttpSegment;
+
+    Trace::getInstance()
+    ->setTraceHeader($_SERVER['HTTP_X_AMZN_TRACE_ID'] ?? null)
+    ->setName('cstaff-rds')
+    ->setUrl($_SERVER['REQUEST_URI'])
+    ->setMethod($_SERVER['REQUEST_METHOD'])
+    ->begin(); 
+
 
 // File upload folder 
 $uploadDir = '/img/menu/';
@@ -13,7 +27,20 @@ $mitem_price = $_POST['mitem-price'];
 $mitem_status = $_POST['mitem-status'];
 
 $queryValidate = "SELECT mitem_name FROM mitem WHERE mitem_name = '{$mitem_name}';";
+Trace::getInstance()
+    ->getCurrentSegment()
+    ->addSubsegment(
+        (new SqlSegment())
+            ->setName('ddac.co6fyvysy1hr.us-east-1.rds.amazonaws.com')
+            ->setDatabaseType('MySql')
+            ->setQuery($queryValidate)    // Make sure to remove sensitive data before passing in a query
+            ->begin()    
+               
+    );
 $result = $mysqli->query($queryValidate);
+Trace::getInstance()
+->getCurrentSegment()
+->end();
 if (mysqli_num_rows($result)) {
     $response['server_status'] = 0;
     echo json_encode($response);
@@ -33,6 +60,14 @@ if (mysqli_num_rows($result)) {
         #$bucket = 'ddac-pastry-tp053060';
         $temp_file_location = $_FILES['mitem-pic']['tmp_name'];
         $key = basename($fileName);
+   Trace::getInstance()
+    ->getCurrentSegment()
+    ->addSubsegment(
+        (new RemoteSegment())
+            ->setName('AddImagetoS3')
+            ->begin()    
+    );
+
         try {
             $result = $s3Client->putObject([
                 'Bucket' => $bucket,
@@ -42,6 +77,9 @@ if (mysqli_num_rows($result)) {
                 'ACL'    => 'public-read', // make file 'public'
                 'ContentType' => 'image/png',
             ]);
+  Trace::getInstance()
+    ->getCurrentSegment()
+    ->end();
 
             $image_path = "https://dcczugkilqv0c.cloudfront.net/" . basename($result->get('ObjectURL'));
             //echo "Image uploaded successfully. Image path is: ".$image_path;
@@ -59,4 +97,8 @@ if (mysqli_num_rows($result)) {
             $response['server_status'] = 0;
         }
     }
+    Trace::getInstance()
+    ->end()
+    ->setResponseCode(http_response_code())
+    ->submit(new DaemonSegmentSubmitter()); 
 }

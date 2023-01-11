@@ -17,12 +17,12 @@ use Pkerrigan\Xray\RemoteSegment;
         exit(1);
     }
 
-    Trace::getInstance()
-    ->setTraceHeader($_SERVER['HTTP_X_AMZN_TRACE_ID'] ?? null)
-    ->setName('cstaff')
-    ->setUrl($_SERVER['REQUEST_URI'])
-    ->setMethod($_SERVER['REQUEST_METHOD'])
-    ->begin(); 
+    // Trace::getInstance()
+    // ->setTraceHeader($_SERVER['HTTP_X_AMZN_TRACE_ID'] ?? null)
+    // ->setName('cstaff')
+    // ->setUrl($_SERVER['REQUEST_URI'])
+    // ->setMethod($_SERVER['REQUEST_METHOD'])
+    // ->begin(); 
 
 Trace::getInstance()
     ->getCurrentSegment()

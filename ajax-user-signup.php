@@ -1,6 +1,20 @@
 <?php session_start();
 include("conn_db.php");
 include("SNS_conn.php");
+require('vendor/autoload.php');
+    use Pkerrigan\Xray\Trace;
+    use Pkerrigan\Xray\Submission\DaemonSegmentSubmitter;
+    use Pkerrigan\Xray\SqlSegment;
+    use Pkerrigan\Xray\RemoteSegment;
+use Pkerrigan\Xray\HttpSegment;
+
+    Trace::getInstance()
+    ->setTraceHeader($_SERVER['HTTP_X_AMZN_TRACE_ID'] ?? null)
+    ->setName('customer-signup-sns/rds')
+    ->setUrl($_SERVER['REQUEST_URI'])
+    ->setMethod($_SERVER['REQUEST_METHOD'])
+    ->begin(); 
+
 
 if (isset($_POST['user_fname'], $_POST['user_lname'], $_POST['user_pwd'], $_POST['user_username'], $_POST['user_email'])) {
     if (!empty($_POST['user_fname']) && !empty($_POST['user_lname']) &&  !empty($_POST['user_pwd']) &&  !empty($_POST['user_username']) &&  !empty($_POST['user_email'])) {
@@ -36,10 +50,26 @@ if (isset($_POST['user_fname'], $_POST['user_lname'], $_POST['user_pwd'], $_POST
 
         // $queryValidate = "SELECT * FROM user WHERE user_username = '{$user_username}';";
         // $result = $mysqli->query($queryValidate);
+
         $queryValidate = $mysqli->prepare("SELECT * FROM user WHERE user_username =?;");
+Trace::getInstance()
+    ->getCurrentSegment()
+    ->addSubsegment(
+        (new SqlSegment())
+            ->setName('ddac.co6fyvysy1hr.us-east-1.rds.amazonaws.com')
+            ->setDatabaseType('MySql')
+            ->setQuery("SELECT * FROM user WHERE user_username =?;")    // Make sure to remove sensitive data before passing in a query
+            ->begin()    
+               
+    );
+
         $queryValidate->bind_param('s', $user_username);
         $queryValidate->execute();
         $result = $queryValidate->get_result();
+Trace::getInstance()
+->getCurrentSegment()
+->end();
+
         if (mysqli_num_rows($result)) {
             $response['server_status'] = -1;
             echo json_encode($response);
@@ -53,12 +83,29 @@ if (isset($_POST['user_fname'], $_POST['user_lname'], $_POST['user_pwd'], $_POST
             $insert_result = $insert_query->execute();
             if ($insert_result) {
                 try {
+   Trace::getInstance()
+    ->getCurrentSegment()
+    ->addSubsegment(
+        (new RemoteSegment())
+            ->setName('SNSSubscription')
+            ->begin()    
+    );
+
                     $result = $SnSclient->subscribe([
                         'Protocol' => $protocol,
                         'Endpoint' => $user_email,
                         'ReturnSubscriptionArn' => true,
                         'TopicArn' => $topic,
                     ]);
+  Trace::getInstance()
+    ->getCurrentSegment()
+    ->end();
+    Trace::getInstance()
+    ->end()
+    ->setResponseCode(http_response_code())
+    ->submit(new DaemonSegmentSubmitter()); 
+
+
                     
                     $response['server_status'] = 1;
                     echo json_encode($response);

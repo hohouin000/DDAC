@@ -5,10 +5,32 @@
     <?php session_start();
     include("../conn_db.php");
     include('../head.php');
+    require('../vendor/autoload.php');
+    use Pkerrigan\Xray\Trace;
+    use Pkerrigan\Xray\Submission\DaemonSegmentSubmitter;
+    use Pkerrigan\Xray\HttpSegment;
+use Pkerrigan\Xray\RemoteSegment;
+
+
     if ($_SESSION["user_role"] != "CSTAFF") {
         header("location:../restricted.php");
         exit(1);
     }
+
+     Trace::getInstance()
+     ->setTraceHeader($_SERVER['HTTP_X_AMZN_TRACE_ID'] ?? null)
+     ->setName('cstaff-menu-page')
+     ->setUrl($_SERVER['REQUEST_URI'])
+     ->setMethod($_SERVER['REQUEST_METHOD'])
+     ->begin(); 
+
+Trace::getInstance()
+    ->getCurrentSegment()
+    ->addSubsegment(
+        (new RemoteSegment())
+            ->setName('Cloudfrontimageload')
+            ->begin()    
+    );
 
     ?>
 
@@ -64,7 +86,8 @@
                             if (data != "") {
                                 //return '<img src="../img/menu/' + data + "?" + new Date().getTime() + '"class="img-fluid rounded" width="125px" height="120px"/>'
                                 return '<img src="' + data +"?" + new Date().getTime() +'"class="img-fluid rounded" width="125px" height="120px"/>'
-                            } else {
+                        
+ } else {
                                 return ''
                             }
                         }
@@ -297,7 +320,17 @@
     </div>
     <!-- End of Edit Modal -->
 
-    <?php include("../toast-message.php"); ?>
+    <?php include("../toast-message.php");
+    Trace::getInstance()
+    ->getCurrentSegment()
+    ->end();
+
+    Trace::getInstance()
+    ->end()
+    ->setResponseCode(http_response_code())
+    ->submit(new DaemonSegmentSubmitter());  
+
+ ?>
 </body>
 
 </html>
