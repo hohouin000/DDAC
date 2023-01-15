@@ -1,6 +1,6 @@
 <?php
 require 'aws/aws-autoloader.php';
-include("AWS_crededntials.php");
+include("AWS_credentials.php");
 use Aws\Sns\SnsClient; 
 use Aws\Exception\AwsException;
 

@@ -1,6 +1,6 @@
 <?php
 require 'aws/aws-autoloader.php';
-include("AWS_crededntials.php");
+include("AWS_credentials.php");
 
 $s3Client = new Aws\S3\S3Client([
 	'region'  => 'us-east-1',
